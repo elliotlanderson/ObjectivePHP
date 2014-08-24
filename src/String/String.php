@@ -108,4 +108,28 @@ class String
 		return $this;
 	}
 
+	/**
+	* html()
+	* This method will convert all applicable charaters to HTML entities
+	* @return $this
+	*/
+
+	public function html()
+	{
+		$this->string = htmlentities($this->string);
+
+		return $this->string;
+	}
+
+	/**
+	* explode() 
+	* This method will explode the string into an array
+	* @param 1 -> character to split the array
+	* @return $this
+	*/
+
+	public function explode($character)
+	{
+		return new \ObjectivePHP\Collection\Collection(explode($character, $this->string));
+	}
 }

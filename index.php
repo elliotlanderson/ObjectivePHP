@@ -1,5 +1,8 @@
 <?php
 
+error_reporting(-1);
+ini_set('display_errors', 'On');
+
 require 'vendor/autoload.php';
 $whoops = new \Whoops\Run;
 
@@ -9,6 +12,16 @@ $whoops->register();
 
 include('src/String/String.php');
 
-$test = new ObjectivePHP\String\String('Test');
+include('src/Collection/Collection.php');
 
-echo $test->lower()->append(' Lol')->upper()->replace('T', 'm');
+$test = new ObjectivePHP\String\String('ABCCBA');
+
+
+$array = $test->explode('C');
+
+$array->add(array(
+	'test'=>4
+));
+
+$array[0] = 'test';
+
