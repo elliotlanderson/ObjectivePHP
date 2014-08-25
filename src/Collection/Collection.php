@@ -11,7 +11,7 @@ class Collection implements \arrayaccess, \IteratorAggregate
 
 	protected $array = array();
 
-	public function __construct($var)
+	public function __construct($var = null)
 	{
 		if (is_string($var)) {
 			$this->array[] = $var;
@@ -88,6 +88,12 @@ class Collection implements \arrayaccess, \IteratorAggregate
 		sort($this->array, $sortingtype);
 	}
 
+	/**
+	* add()   
+	* This method will add the paramter to your array 
+	* @param 1 -> string or array
+	* @return $this
+	*/
 	public function add($value)
 	{
 		if (is_array($value)) {
@@ -95,6 +101,101 @@ class Collection implements \arrayaccess, \IteratorAggregate
 		} elseif (is_string($value)) {
 			$this->array[] = $value;
 		}
+
+		return $this;
+	}
+
+	/**
+	* getArray() 
+	* return the raw array as a data type array
+	* @return array
+	*/
+
+	public function getArray()
+	{
+		return $this->array;
+	}
+
+	/**
+	* first()
+	* This method will grab the first item in the array
+	* @return type of whatever first element is. False if empty
+	*/
+
+	public function first()
+	{
+		return reset($this->array);
+	}
+
+	/**
+	* last()
+	* This method will grab the last item in the array
+	* @return type of whatever last element is. False if empty
+	*/
+
+	public function last()
+	{
+		return end($this->array);
+	}
+
+	/**
+	* toObject()
+	* this method will typecast the array to an object for you
+	* @return instance of stdObj
+	*/
+
+	public function toObject()
+	{
+		return (Object)$this->array;
+	}
+
+	/**
+	* values() 
+	* This method will return an array of all the values 
+	* @return array
+	*/
+
+	public function values()
+	{
+		return array_values($this->array);
+	}
+
+	/**
+	* reverse() 
+	* Reverses the array
+	* @return $this
+	*/
+
+	public function reverse()
+	{
+		$this->array = array_reverse($this->array);
+
+		return $this;
+	}
+
+	/**
+	* remove()
+	* Removes an item from the array
+	* @param 1 -> String/Int of index to remove 
+	* separate by a period to remove a multidimensional value
+	* @return $this
+	*/
+
+	public function remove($index) 
+	{
+		unset($this->array[$index]);
+	}
+
+	public function dump()
+	{
+		var_dump($this->array);
+
+		return $this;
+	}
+
+	public function clear()
+	{
+		$this->array = array();
 
 		return $this;
 	}

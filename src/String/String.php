@@ -2,7 +2,7 @@
 
 namespace ObjectivePHP\String;
 
-class String
+class String implements \arrayaccess
 {
 
 	/**
@@ -40,6 +40,47 @@ class String
 		} else {
 			return '';
 		}
+	}
+
+	public function insertCharacters($offset, $value)
+	{
+		$string = str_split($this->string);
+
+		$string[$offset] = $value;
+
+		$this->string = implode('', $string);
+	}
+	/**
+	* arrayaccess methods
+	* Tehse are the methods that the implementation requires
+	*
+	*/
+
+	public function offsetSet($offset, $value)
+	{
+		$this->insertCharacters($offset, $value);
+	}
+
+	public function offsetExists($offset) {
+		$string = str_split($this->string);
+
+		return isset($string[$offset]);
+	}
+
+	public function offsetUnset($offset) {
+
+		$string = str_split($this->string);
+
+		unset($string[$offset]);
+
+		$this->string = implode('', $string);
+	}
+
+	public function offsetGet($offset) {
+
+		$string = str_split($this->string);
+
+		return isset($string[$offset]) ? $string[$offset] : null;
 	}
 
 	/**
@@ -118,7 +159,7 @@ class String
 	{
 		$this->string = htmlentities($this->string);
 
-		return $this->string;
+		return $this;
 	}
 
 	/**
@@ -131,5 +172,25 @@ class String
 	public function explode($character)
 	{
 		return new \ObjectivePHP\Collection\Collection(explode($character, $this->string));
+	}
+
+	/**
+	* dump()
+	* This method will var_dump the current string.  
+	* @return $this for daisy chain compatibility
+	*/
+
+	public function dump()
+	{
+		var_dump($this->string);
+
+		return $this;
+	}
+
+	public function clear()
+	{ 
+		$this->string = '';
+		
+		return $this;
 	}
 }
